@@ -43,7 +43,8 @@ $(document).ready(function() {
 
 
 </script>
-
+{% load static %}
 my name is '{{person}}'.
 <div id="html"></div><br /><br />
-<div id="image"> <img src="{% url 'eventos:video' %}" width="90%"> </div>
+<div id="image"> <img src="{% url 'eventos:video' %}" width="70%" heigth="200px"> </div>
+<img src="{% static "eventos/hola.png" %}" alt="My image">

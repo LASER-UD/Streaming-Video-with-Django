@@ -10,7 +10,7 @@ from django.http import StreamingHttpResponse
 def index(request):
     x= 12
     direccion = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhB82XwnxSmPIer3V_bStkR-RqxlhFFcIc7GKoxX7NUXHt0N0S'
-    return render(request,'eventos/index.html',{'person': x,'imagen': direccion})
+    return render(request,'eventos/index1.html',{'person': x,'imagen': direccion})
 
 #@csrf_exempt
 
