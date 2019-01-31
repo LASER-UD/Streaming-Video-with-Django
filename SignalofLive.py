@@ -5,7 +5,6 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(7, GPIO.OUT)
 
-
 response = 1
 while response==1:
 	response=os.system("ping -c 1 google.com &")
