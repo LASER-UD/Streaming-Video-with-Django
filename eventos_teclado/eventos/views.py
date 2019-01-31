@@ -4,6 +4,8 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 import cv2
 import threading
+import RPi.GPIO as GPIO
+#from time import sleep
 from django.views.decorators.gzip import gzip_page
 from django.http import StreamingHttpResponse
 # Create your views here.
@@ -23,6 +25,8 @@ def tecla_pre(request):
 		response_data = {}
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'presionada'
+		if tecla == '74':
+			GPIO.output(7,True)
 		return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
 	else:
@@ -34,11 +38,13 @@ def tecla_pre(request):
 def tecla_sol(request):
 	if request.method == 'POST':
 		
-		tecla = str(chr(int(request.POST.get('tecla_sol'))))
+		tecla = request.POST.get('tecla_sol')
 		print(tecla)
 		response_data = {}
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'soltada'
+		if tecla == '74':
+			GPIO.output(7,False)
 		return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
 	else:
@@ -67,7 +73,9 @@ class VideoCamera(object):
 
 
 camera=VideoCamera()
-
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(7, GPIO.OUT)
 
 def gen(camera):
     while True:
