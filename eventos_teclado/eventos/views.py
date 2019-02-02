@@ -4,15 +4,18 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 import cv2
 import threading
-import RPi.GPIO as GPIO
+#import RPi.GPIO as GPIO
 #from time import sleep
 from django.views.decorators.gzip import gzip_page
 from django.http import StreamingHttpResponse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+@login_required
 def index(request):
     x= 12
     direccion = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhB82XwnxSmPIer3V_bStkR-RqxlhFFcIc7GKoxX7NUXHt0N0S'
-    return render(request,'eventos/index1.html',{'person': x,'imagen': direccion})
+    return render(request,'eventos/index1.html')
 
 #@csrf_exempt
 
@@ -26,8 +29,8 @@ def tecla_pre(request):
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'presionada'
 		if tecla == '74':
-			GPIO.output(7,True)
-		return HttpResponse(json.dumps(response_data), content_type="application/json")
+			#GPIO.output(7,True)
+			return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
 	else:
         	return HttpResponse(
@@ -44,14 +47,12 @@ def tecla_sol(request):
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'soltada'
 		if tecla == '74':
-			GPIO.output(7,False)
-		return HttpResponse(json.dumps(response_data), content_type="application/json")
+			#GPIO.output(7,False)
+			return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
-	else:
-        	return HttpResponse(
-            	json.dumps({"nothing to see": "this isn't happening"}),
-            	content_type="application/json"
-       		)
+		else:
+		
+  			return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
 
 class VideoCamera(object):
     def __init__(self):
@@ -73,9 +74,9 @@ class VideoCamera(object):
 
 
 camera=VideoCamera()
-GPIO.setwarnings(False)
-GPIO.setmode(GPIO.BOARD)
-GPIO.setup(7, GPIO.OUT)
+#GPIO.setwarnings(False)
+#GPIO.setmode(GPIO.BOARD)
+#GPIO.setup(7, GPIO.OUT)
 
 def gen(camera):
     while True:

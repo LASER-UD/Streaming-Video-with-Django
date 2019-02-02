@@ -119,3 +119,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
 STATIC_URL = '/static/'
+
+LOGIN_REDIRECT_URL = '/eventos/'
+
+LOGIN_URL = '/accounts/login/'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE= True
