@@ -8,11 +8,14 @@ import threading
 #from time import sleep
 from django.views.decorators.gzip import gzip_page
 from django.http import StreamingHttpResponse
+from django.contrib.auth.decorators import login_required
 # Create your views here.
+
+@login_required
 def index(request):
     x= 12
     direccion = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhB82XwnxSmPIer3V_bStkR-RqxlhFFcIc7GKoxX7NUXHt0N0S'
-    return render(request,'eventos/index1.html',{'person': x,'imagen': direccion})
+    return render(request,'eventos/index1.html')
 
 #@csrf_exempt
 
@@ -25,7 +28,13 @@ def tecla_pre(request):
 		response_data = {}
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'presionada'
-		return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+		if tecla == '74':
+			#GPIO.output(8,True)
+			return HttpResponse(json.dumps(response_data), content_type="application/json")
+		else:
+			return HttpResponse(json.dumps(response_data), content_type="application/json")		
+
 		
 	else:
         	return HttpResponse(
@@ -41,13 +50,14 @@ def tecla_sol(request):
 		response_data = {}
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'soltada'
-		return HttpResponse(json.dumps(response_data), content_type="application/json")
+
+		if tecla == '74':
+			#GPIO.output(8,False)
+			return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
-	else:
-        	return HttpResponse(
-            	json.dumps({"nothing to see": "this isn't happening"}),
-            	content_type="application/json"
-       		)
+		else:
+		
+  			return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
 
 class VideoCamera(object):
     def __init__(self):
@@ -70,8 +80,10 @@ class VideoCamera(object):
 
 camera=VideoCamera()
 #GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BOARD)
-#GPIO.setup(7, GPIO.OUT)
+
+#GPIO.setmode(8,GPIO.BOARD)
+#GPIO.setup(8, GPIO.OUT)
+
 
 def gen(camera):
     while True:
