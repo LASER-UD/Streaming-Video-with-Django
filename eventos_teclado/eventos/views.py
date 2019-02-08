@@ -29,8 +29,10 @@ def tecla_pre(request):
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'presionada'
 		if tecla == '74':
-			#GPIO.output(7,True)
+			#GPIO.output(8,True)
 			return HttpResponse(json.dumps(response_data), content_type="application/json")
+		else:
+			return HttpResponse(json.dumps(response_data), content_type="application/json")		
 		
 	else:
         	return HttpResponse(
@@ -47,7 +49,7 @@ def tecla_sol(request):
 		response_data['tecla'] = tecla
 		response_data['accion'] = 'soltada'
 		if tecla == '74':
-			#GPIO.output(7,False)
+			#GPIO.output(8,False)
 			return HttpResponse(json.dumps(response_data), content_type="application/json")
 		
 		else:
@@ -75,8 +77,8 @@ class VideoCamera(object):
 
 camera=VideoCamera()
 #GPIO.setwarnings(False)
-#GPIO.setmode(GPIO.BOARD)
-#GPIO.setup(7, GPIO.OUT)
+#GPIO.setmode(8,GPIO.BOARD)
+#GPIO.setup(8, GPIO.OUT)
 
 def gen(camera):
     while True:
