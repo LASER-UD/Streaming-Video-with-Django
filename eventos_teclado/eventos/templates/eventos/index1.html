@@ -1,23 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
-
-
 <head>
+
 	{% load static %}
 	<meta charset="utf-8" />
-	<title>sin título</title>
+	<title>JORDAN</title>
 	<meta name="generator" content="Geany 1.29" />
+        <link rel="stylesheet" href="{%  static 'eventos/estilos.css' %}" />
 	<link rel="shortcut icon" href="{%  static 'eventos/favicon.ico' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript">
 	// setup some JSON to use
-
-
 	var teclas=[];
 	$(document).ready(function() {	
-		
-		
-		
 		$(document).keydown(function(tecla){ 
 				var tec = tecla.keyCode ;
 				$.ajax({
@@ -28,7 +23,6 @@
 					success : function(json) {
 						console.log(json); // log the returned json to the console
 						console.log("success"); // another sanity check
-						$('#html').text(JSON.stringify(json['tecla']));
 					},
 				});
 				event.preventDefault();
@@ -51,14 +45,18 @@
 		});
 	});
 	</script>
-
 </head>
-
-<body>
-	my name is '{{person}}'.
-	<div id="html"></div><br /><br />
-	<div id="image"> <img src="{% url 'eventos:video' %}" width="60%" height="400px"> </div>
-	<img src="{% static "eventos/hola.png" %}" alt="My image">
+<body style="overflow-y: hidden;" class="body">
+	<img src="{% url 'eventos:video' %}" width="50%" class="imagen">
+	<div class="divr"></div>
+	<div class="div1">
+		ESPACIO DISPONIBLE PARA LOS COMANDOS DE OPERACION ...
+		PROXIMAMENTE ...
+		
+	</div>
+	<div class="div2">
+		ESPACIO PARA GENERAR MAPA BASADO EN LOS SENSORES ...
+	</div>
+	<div class="divl"></div>
 </body>
-
 </html>
