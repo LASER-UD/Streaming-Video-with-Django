@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BookmarkManager">
+    <bookmark url="file://$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py" description="CACHES = {&#10;    'default': {&#10;        'BACKEND': 're..." line="130" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="69073c54-c2d4-4f7b-80ab-41b6bb7b14b4" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SignalofLive.py" beforeDir="false" afterPath="$PROJECT_DIR$/SignalofLive.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/admin.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/apps.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/migrations/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/migrations/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/models.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/estilos.css" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/estilos.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/favicon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/favicon.ico" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/hola.png" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/static/eventos/hola.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/htmlservidor.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/htmlservidor.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/index1.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/templates/eventos/index1.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/templates/registration/login.html" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/templates/registration/login.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/tests.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/tests.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/urls.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/wsgi.py" beforeDir="false" afterPath="$PROJECT_DIR$/eventos_teclado/eventos_teclado/wsgi.py" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos/views.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="142">
+              <caret line="87" column="25" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="600">
+              <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/eventos_teclado/eventos/middleware.py" />
+        <option value="$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py" />
+        <option value="$PROJECT_DIR$/eventos_teclado/eventos/models.py" />
+        <option value="$PROJECT_DIR$/eventos_teclado/eventos/views.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="10" />
+    <option name="y" value="95" />
+    <option name="width" value="1206" />
+    <option name="height" value="599" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="Scope" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="Streaming-Video-with-Django" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Streaming-Video-with-Django" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Streaming-Video-with-Django" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Streaming-Video-with-Django" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos_teclado" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Streaming-Video-with-Django" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Streaming-Video-with-Django" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos_teclado" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Streaming-Video-with-Django" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Streaming-Video-with-Django" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos_teclado" type="462c0819:PsiDirectoryNode" />
+              <item name="eventos_teclado" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Video-Streaming-with-Flask/camWebServer2" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="69073c54-c2d4-4f7b-80ab-41b6bb7b14b4" name="Default Changelist" comment="" />
+      <created>1552332187044</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1552332187044</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="37" width="1360" height="626" extended-state="6" />
+    <editor active="true" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24887893" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.061769616" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32888147" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout>
+    <layout-to-restore>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24887893" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Terminal" order="8" visible="true" weight="0.061769616" />
+      <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.32888147" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+    </layout-to-restore>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos/middleware.py" />
+    <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="142">
+          <caret line="87" column="25" selection-start-line="87" selection-start-column="25" selection-end-line="87" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/eventos_teclado/eventos_teclado/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="40" column="1" selection-start-line="40" selection-start-column="1" selection-end-line="40" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
