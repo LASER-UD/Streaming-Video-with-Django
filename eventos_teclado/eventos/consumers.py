@@ -24,14 +24,11 @@ class VideoCamera(object):
         while self.video.read():
             (self.grabbed, self.frame) = self.video.read()
 
-
 camera = VideoCamera()
-
 #sincrono
 class ChatConsumer(WebsocketConsumer):
     frame=None
     clientes=0
-    data=None
     def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -44,8 +41,8 @@ class ChatConsumer(WebsocketConsumer):
 
         self.accept()
         if(self.clientes==0):
+            camera.start()
             self.clientes=self.clientes+1
-            threading.Thread(target=self.gen(camera), args=()).start()
         else:
             self.clientes=self.clientes+1
         print(self.clientes)
@@ -57,42 +54,43 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.clientes=self.clientes-1
+        if(self.clientes==0):
+            camera.end()
         print(self.clientes)
 
     # Receive message from WebSocket
     def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
+        self.frame=base64.b64encode(camera.get_frame())
+        self.send(text_data=self.frame.decode('ascii'))
+        # text_data_json = json.loads(text_data)
+        # message = text_data_json['message']
 
-        # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
+        # # Send message to room group
+        # async_to_sync(self.channel_layer.group_send)(
+        #     self.room_group_name,
+        #     {
+        #         'type': 'chat_message',
+        #         'message': message
+        #     }
+        # )
+       
+
 
     # Receive message from room group
     def chat_message(self, event):
         message = event['message']
 
         # Send message to WebSocket
-        self.send(text_data=json.dumps({
-            'type':'mensaje',
-            'message': message
-        }))
+        if message=='1':
+            self.frame=base64.b64encode(camera.get_frame())
+            self.send(text_data=self.frame.decode('ascii'))
+        else:    
+            self.send(text_data=json.dumps({
+                'type':'mensaje',
+                'message': message
+            }))
 
-    def gen(self,camera):
-        camera.start();
-        while True:
-            if self.clientes>0:
-                self.frame = camera.get_frame()
-                self.send(bytes_data=self.frame)
-                time.sleep(1)
-            else:
-                camera.end()
-                break
+  
 
 
 #asincrono
@@ -101,6 +99,8 @@ class ChatConsumer(WebsocketConsumer):
 from channels.generic.websocket import AsyncWebsocketConsumer
 
 class ChatConsumer1(AsyncWebsocketConsumer):
+    frame=None
+    clientes=0
     async def connect(self):
         self.room_name = self.scope['url_route']['kwargs']['room_name']
         self.room_group_name = 'chat_%s' % self.room_name
@@ -112,6 +112,12 @@ class ChatConsumer1(AsyncWebsocketConsumer):
         )
 
         await self.accept()
+        if(self.clientes==0):
+             self.clientes=self.clientes+1
+             threading.Thread(target=self.gen(camera), args=()).start()
+        else:
+             self.clientes=self.clientes+1
+             print(self.clientes)
 
     async def disconnect(self, close_code):
         # Leave room group
@@ -119,6 +125,9 @@ class ChatConsumer1(AsyncWebsocketConsumer):
             self.room_group_name,
             self.channel_name
         )
+        self.clientes=self.clientes-1
+        print(self.clientes)
+
 
     # Receive message from WebSocket
     async def receive(self, text_data):
@@ -140,5 +149,16 @@ class ChatConsumer1(AsyncWebsocketConsumer):
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
+             'type':'mensaje',
             'message': message
         }))
+
+    def gen(self,camera):
+        camera.start();
+        while True:
+            if self.clientes>0:
+                self.frame =base64.b64encode(camera.get_frame())
+                self.send(text_data=self.frame)
+            else:
+                camera.end()
+                break

@@ -18,18 +18,25 @@
         'ws://' + window.location.host +
         '/ws/eventos/chat/' + roomName + '/');
 
+    chatSocket.onopen = function () {
+        chatSocket.send(JSON.stringify({
+            'message': '1'
+        }));
+    };
+
     chatSocket.onmessage = function(e) {
-        //var data = JSON.parse(e.data);
-        //var message = data['message'];
-        //var tipo =data['type']
-        //if(tipo=='mensaje'){
+        // var data = JSON.parse(e.data);
+        // var message = data['message'];
+        // var tipo =data['type'];
+        // if(tipo=='mensaje'){
         //    document.querySelector('#chat-log').value += (message + '\n');
         //    console.log('recibido : ' +message+' tipo:'+data['type']);
+        // }
+        chatSocket.send(JSON.stringify({
+            'message': '1'
+        }));
         var data=e.data;
-        console.log(data);
-        const blobUrl = URL.createObjectURL(data);
-        console.log(blobUrl);
-        //document.querySelector('#streaming').src= bloburl;
+        document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data;
     };
 
     chatSocket.onclose = function(e) {
