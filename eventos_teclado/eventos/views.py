@@ -9,7 +9,16 @@ import threading
 from django.views.decorators.gzip import gzip_page
 from django.http import StreamingHttpResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.safestring import mark_safe
 # Create your views here.
+
+def chat(request):
+    return render(request, 'eventos/chat.html', {})
+
+def room(request, room_name):
+    return render(request, 'eventos/room.html', {
+        'room_name_json': mark_safe(json.dumps(room_name))
+    })
 
 @login_required
 def index(request):
@@ -60,7 +69,7 @@ def tecla_sol(request):
   			return HttpResponse(json.dumps({"nothing to see": "this isn't happening"}),content_type="application/json")
 
 class VideoCamera(object):
-    def __init__(self):
+    def start(self):
         self.video = cv2.VideoCapture(0)
         (self.grabbed, self.frame) = self.video.read()
         threading.Thread(target=self.update, args=()).start()
@@ -74,7 +83,7 @@ class VideoCamera(object):
         return jpeg.tobytes()
 
     def update(self):
-        while True:
+        while self.video.read():
             (self.grabbed, self.frame) = self.video.read()
 
 
