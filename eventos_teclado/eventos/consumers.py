@@ -5,6 +5,27 @@ import base64
 import cv2
 import threading
 import time
+import serial
+class SerialD():
+    def __init__(self):
+        self.datos=None;
+        self.ser = serial.Serial()
+        self.ser.baudrate = 460800
+        self.ser.port = '/dev/ttyACM0'
+    def start(self):
+        self.ser.open()
+        threading.thread(threading.Thread(target=self.update, args=()).start())
+    def end(self):
+        self.ser.close()
+
+    def update(self):
+        while True:
+           while self.ser.inWaiting() > 0: #espera a que exista un dato
+            self.datos=self.ser.readline()
+
+    def enviar(self, datos):
+        self.ser.write(datos)
+        
 class VideoCamera(object):
     clientes=0;
     image=None;
@@ -21,85 +42,8 @@ class VideoCamera(object):
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 
-    def update(self):
-        while self.video.read():
-            (self.grabbed, self.frame) = self.video.read()
-
-
 camera = VideoCamera()
-
-#sincrono
-class ChatConsumer1(WebsocketConsumer):
-    
-    def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['room_name']
-        self.room_group_name = 'chat_%s' % self.room_name
-
-        # Join room group
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-        self.accept()
-        camera.clientes=camera.clientes + 1
-        print(camera.clientes)
-
-        if(camera.clientes==1):
-            camera.start()
-        
-        self.send(text_data=json.dumps({
-                'type':'clientes',
-                'message': camera.clientes
-            }))
-        
-    def disconnect(self, close_code):
-        # Leave room group
-        
-        camera.clientes=camera.clientes -1
-        if(camera.clientes==0):
-            camera.end()
-            async_to_sync(self.channel_layer.group_discard)(
-            self.room_group_name,
-            self.channel_name
-            )
-        else:
-            async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': 'desc',
-                'tipo': 'clientes'
-            }
-            )
-            
-        print(camera.clientes)
-
-    # Receive message from WebSocket
-    def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        # Send message to room group
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message,
-                'tipo': 'mensaje',
-            }
-        )
-
-
-    def chat_message(self, event):
-        message = event['message']
-        tipo = event['tipo']
-        if(message=='1'):
-            self.send(text_data=json.dumps({'type':'imagen','message':base64.b64encode(camera.get_frame()).decode('ascii')}))
-        else:
-            self.send(text_data=json.dumps({'type':tipo,'message':message}))
-            
-    
-       
+seri= SerialD()
 
 #asincrono
 #https://channels.readthedocs.io/en/latest/tutorial/part_3.html explicacion de como usar 
@@ -124,6 +68,7 @@ class webcam(AsyncWebsocketConsumer):
 
         if(camera.clientes==1):
             camera.start()
+            seri.start()
         
         await self.send(text_data=json.dumps({
                 'type':'clientes',
@@ -136,6 +81,7 @@ class webcam(AsyncWebsocketConsumer):
         camera.clientes=camera.clientes -1
         if(camera.clientes==0):
             camera.end()
+            seri.end()
             await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
@@ -178,33 +124,3 @@ class webcam(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({'type':'imagen','message':base64.b64encode(camera.get_frame()).decode('ascii')}))
         else:
             await self.send(text_data=json.dumps({'type':tipo,'message':message}))
-   
-class tecla(AsyncWebsocketConsumer):
-    
-    async def connect(self):
-        
-        self.room_group_name = 'tecla'
-
-        # Join room group
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
-
-        await self.accept()
-        
-        
-
-    async def disconnect(self, close_code):
-        # Leave room group
-        
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    # Receive message from WebSocket
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        print(message)
