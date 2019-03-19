@@ -22,12 +22,12 @@
     //     '/ws/eventos/tecla/');
 
     webcamSocket.onmessage = function(e) {
-    	 var data=JSON.parse(e.data);
-    	switch(data['type']) {
-  			case 'imagen':
-  				document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
-    		break;
-  			case 'clientes':
+
+        var data=JSON.parse(e.data);
+        if(data['type']=='imagen'){
+            document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
+        }else{
+            if(data['type']=='clientes'){
                 console.log(data['message']);
                 if(data['message']=='desc' ){
                     if(cliente>1){
@@ -37,12 +37,9 @@
                     cliente=data['message'];
                 }
                 console.log(cliente);
-
-    		break;
-  			default:
-  			break;
-		}
-
+            }
+            
+        }
         if(cliente==1){
                 webcamSocket.send(JSON.stringify({
                     'message': '1',

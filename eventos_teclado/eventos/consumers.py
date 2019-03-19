@@ -27,7 +27,79 @@ class VideoCamera(object):
 
 
 camera = VideoCamera()
-  
+
+#sincrono
+class ChatConsumer1(WebsocketConsumer):
+    
+    def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['room_name']
+        self.room_group_name = 'chat_%s' % self.room_name
+
+        # Join room group
+        async_to_sync(self.channel_layer.group_add)(
+            self.room_group_name,
+            self.channel_name
+        )
+        self.accept()
+        camera.clientes=camera.clientes + 1
+        print(camera.clientes)
+
+        if(camera.clientes==1):
+            camera.start()
+        
+        self.send(text_data=json.dumps({
+                'type':'clientes',
+                'message': camera.clientes
+            }))
+        
+    def disconnect(self, close_code):
+        # Leave room group
+        
+        camera.clientes=camera.clientes -1
+        if(camera.clientes==0):
+            camera.end()
+            async_to_sync(self.channel_layer.group_discard)(
+            self.room_group_name,
+            self.channel_name
+            )
+        else:
+            async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': 'desc',
+                'tipo': 'clientes'
+            }
+            )
+            
+        print(camera.clientes)
+
+    # Receive message from WebSocket
+    def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+
+        # Send message to room group
+        async_to_sync(self.channel_layer.group_send)(
+            self.room_group_name,
+            {
+                'type': 'chat_message',
+                'message': message,
+                'tipo': 'mensaje',
+            }
+        )
+
+
+    def chat_message(self, event):
+        message = event['message']
+        tipo = event['tipo']
+        if(message=='1'):
+            self.send(text_data=json.dumps({'type':'imagen','message':base64.b64encode(camera.get_frame()).decode('ascii')}))
+        else:
+            self.send(text_data=json.dumps({'type':tipo,'message':message}))
+            
+    
+       
 
 #asincrono
 #https://channels.readthedocs.io/en/latest/tutorial/part_3.html explicacion de como usar 
@@ -88,7 +160,7 @@ class webcam(AsyncWebsocketConsumer):
         message = text_data_json['message']
         if text_data_json['tipo']=='tecla':
             print(str(message)+ text_data_json['accion'])
-        else:#text_data_json['tipo']=='imagen' 
+        else:
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -98,7 +170,7 @@ class webcam(AsyncWebsocketConsumer):
                 }
             )
 
-    # Receive message from room group envia cuando cliente se desconecta y envia imagnes a todo el grupo
+    # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
         tipo = event['tipo']
@@ -106,3 +178,33 @@ class webcam(AsyncWebsocketConsumer):
             await self.send(text_data=json.dumps({'type':'imagen','message':base64.b64encode(camera.get_frame()).decode('ascii')}))
         else:
             await self.send(text_data=json.dumps({'type':tipo,'message':message}))
+   
+class tecla(AsyncWebsocketConsumer):
+    
+    async def connect(self):
+        
+        self.room_group_name = 'tecla'
+
+        # Join room group
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+
+        await self.accept()
+        
+        
+
+    async def disconnect(self, close_code):
+        # Leave room group
+        
+        await self.channel_layer.group_discard(
+            self.room_group_name,
+            self.channel_name
+        )
+
+    # Receive message from WebSocket
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        print(message)
