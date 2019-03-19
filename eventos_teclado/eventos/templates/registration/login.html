@@ -7,11 +7,11 @@
 	<meta charset="utf-8" />
 	<title>sin título</title>
 	<link rel="shortcut icon" href="{%  static 'eventos/favicon.ico' %}">
-	<link rel="shortcut icon" href="{%  static 'eventos/login.css' %}">
+	<link rel="stylesheet" href="{%  static 'registration/login.css' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 
-<body>
+<body style="overflow-y: hidden;" class="body" >
 <div>
 		{% if form.errors %}
 	<p>Nombre de usuario o contraseña equivocados , vuelva a interlo</p>
@@ -29,17 +29,15 @@
 	<form method="post" action="{% url 'login' %}">
 	{% csrf_token %}
 
-	<div>
-	  <td>{{ form.username.label_tag }}</td>
+	<div  class="formul">
 	  <td>{{ form.username }}</td>
 	</div>
-	<div>
-	  <td>{{ form.password.label_tag }}</td>
+	<div class="formul">
 	  <td>{{ form.password }}</td>
 	</div>
 
 	<div>
-	  <input type="submit" value="Iniciar sesion " />
+	  <input class="boton" type="submit" value="Iniciar sesion " />
 	  <input type="hidden" name="next" value="{{ next }}" />
 	</div>
 	</form>

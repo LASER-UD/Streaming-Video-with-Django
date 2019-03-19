@@ -159,7 +159,7 @@ class webcam(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         if text_data_json['tipo']=='tecla':
-            print(message)
+            print(str(message)+ text_data_json['accion'])
         else:
             await self.channel_layer.group_send(
                 self.room_group_name,

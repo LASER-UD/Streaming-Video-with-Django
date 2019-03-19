@@ -11,43 +11,69 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 	<script type="text/javascript">
 	// setup some JSON to use
-	var teclas=[];
+	var cliente;
+
+    var webcamSocket = new WebSocket(
+        'ws://' + window.location.host +
+        '/ws/eventos/video/');
+
+    // var teclaSocket=new WebSocket(
+    //     'ws://' + window.location.host +
+    //     '/ws/eventos/tecla/');
+
+    webcamSocket.onmessage = function(e) {
+
+        var data=JSON.parse(e.data);
+        if(data['type']=='imagen'){
+            document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
+        }else{
+            if(data['type']=='clientes'){
+                console.log(data['message']);
+                if(data['message']=='desc' ){
+                    if(cliente>1){
+                        cliente=cliente-1;
+                    }
+                }else{
+                    cliente=data['message'];
+                }
+                console.log(cliente);
+            }
+            
+        }
+        if(cliente==1){
+                webcamSocket.send(JSON.stringify({
+                    'message': '1',
+                    'tipo':'imagen'
+                }));
+                           
+        }
+           
+    };
+	
 	$(document).ready(function() {	
 		$(document).keydown(function(tecla){ 
 				var tec = tecla.keyCode ;
-				$.ajax({
-					url : "tecla_pre/", // the endpoint
-					type : "post", // http method
-					data : {'tecla_pre' : tec ,
-						'csrfmiddlewaretoken': '{{ csrf_token }}',}, 
-					success : function(json) {
-						console.log(json); // log the returned json to the console
-						console.log("success"); // another sanity check
-					},
-				});
-				event.preventDefault();
+				webcamSocket.send(JSON.stringify({
+            	'message': tec,
+           		 'tipo': 'tecla',
+           		 'accion':'oprimir'
+       			 }));
 
 		});
 		
 		$(document).keyup(function(tecla){ 
 				var tec = tecla.keyCode ;
-				$.ajax({
-					url : "tecla_sol/", // the endpoint
-					type : "POST", // http method
-					data : {'tecla_sol' : tec ,
-						'csrfmiddlewaretoken': '{{ csrf_token }}',}, 
-					success : function(json) {
-						console.log(json); // log the returned json to the console
-						console.log("success"); // another sanity check
-					},
-				});
-				event.preventDefault();
+				webcamSocket.send(JSON.stringify({
+            	'message': tec,
+           		 'tipo': 'tecla',
+           		 'accion':'soltar'
+       			}));
 		});
 	});
 	</script>
 </head>
 <body style="overflow-y: hidden;" class="body">
-	<img src="{% url 'eventos:video' %}" width="50%" class="imagen">
+	<img src="" id='streaming' width="50%" class="imagen">
 	<div class="divr"></div>
 	<div class="div1">
 		ESPACIO DISPONIBLE PARA LOS COMANDOS DE OPERACION ...
