@@ -12,7 +12,8 @@
 	<script type="text/javascript">
 	// setup some JSON to use
 	var cliente;
-
+	const n1=4;
+	var n = n1;
     var webcamSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/eventos/video/');
@@ -22,7 +23,6 @@
     //     '/ws/eventos/tecla/');
 
     webcamSocket.onmessage = function(e) {
-
         var data=JSON.parse(e.data);
         if(data['type']=='imagen'){
             document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
@@ -41,11 +41,19 @@
             
         }
         if(cliente==1){
+        	if(n==n1){
+        		n=0;
                 webcamSocket.send(JSON.stringify({
                     'message': '1',
                     'tipo':'imagen'
                 }));
-                           
+            }else{
+            	n=n+1;
+            	webcamSocket.send(JSON.stringify({
+                    'message': '2',
+                    'tipo':'n'
+                }));
+            }                         
         }
            
     };
