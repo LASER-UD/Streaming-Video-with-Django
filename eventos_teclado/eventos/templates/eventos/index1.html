@@ -2,63 +2,61 @@
 <html lang="en">
 <head>
 
-	{% load static %}
-	<meta charset="utf-8" />
-	<title>JORDAN</title>
-	<meta name="generator" content="Geany 1.29" />
-        <link rel="stylesheet" href="{%  static 'eventos/estilos.css' %}" />
-	<link rel="shortcut icon" href="{%  static 'eventos/favicon.ico' %}">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-	<script type="text/javascript">
+{% load static %}
+<meta charset="utf-8" />
+<title>JORDAN</title>
+<meta name="generator" content="Geany 1.29" />
+<link rel="stylesheet" href="{%  static 'eventos/estilos.css' %}" />
+<link rel="shortcut icon" href="{%  static 'eventos/favicon.ico' %}">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript">
 	// setup some JSON to use
 	var cliente;
 	const n1=4;
 	var n = n1;
+	
+	
+
+
+function mytimer(){
+	webcamSocket.send(JSON.stringify({
+		'message': '',
+		'tipo': 'imagen'
+	}));
+}
     var webcamSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/eventos/video/');
 
-    // var teclaSocket=new WebSocket(
-    //     'ws://' + window.location.host +
-    //     '/ws/eventos/tecla/');
 
     webcamSocket.onmessage = function(e) {
         var data=JSON.parse(e.data);
         if(data['type']=='imagen'){
             document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
-        }else{
-            if(data['type']=='clientes'){
-                console.log(data['message']);
-                if(data['message']=='desc' ){
-                    if(cliente>1){
-                        cliente=cliente-1;
-                    }
-                }else{
-                    cliente=data['message'];
-                }
-                console.log(cliente);
-            }
-            
-        }
-        if(cliente==1){
-        	if(n==n1){
-        		n=0;
-                webcamSocket.send(JSON.stringify({
-                    'message': '1',
-                    'tipo':'imagen'
-                }));
-            }else{
-            	n=n+1;
-            	webcamSocket.send(JSON.stringify({
-                    'message': '2',
-                    'tipo':'n'
-                }));
-            }                         
-        }
+        }else if(data['type']=='clientes'){
+		console.log(data['message']);
+		if(data['message']=='desc' ){
+			if(cliente>1){
+				cliente=cliente-1;
+				if(cliente==1){
+					setInterval(mytimer,10);
+				}
+			}
+		}
+		else{
+			cliente=data['message'];
+			console.log(cliente);
+			if(cliente==1){
+				setInterval(mytimer,10);
+			}
+
+		}
+	}else{}
            
     };
 	
-	$(document).ready(function() {	
+	$(document).ready(function() {
+		
 		$(document).keydown(function(tecla){ 
 				var tec = tecla.keyCode ;
 				webcamSocket.send(JSON.stringify({

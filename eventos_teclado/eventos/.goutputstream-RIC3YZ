@@ -22,6 +22,7 @@ class SerialD():
          while self.ser.isOpen():
             while self.ser.inWaiting() > 0: #espera a que exista un dato
                 self.datos=self.ser.readline()
+                print(self.datos)
      def enviar(self, datos):
          self.ser.write(datos)
         
@@ -42,7 +43,7 @@ class VideoCamera(object):
         return jpeg.tobytes()
 
 camera = VideoCamera()
-#seri= SerialD()
+seri= SerialD()
 
 #asincrono
 #https://channels.readthedocs.io/en/latest/tutorial/part_3.html explicacion de como usar 
@@ -67,7 +68,7 @@ class webcam(AsyncWebsocketConsumer):
 
         if(camera.clientes==1):
             camera.start()
-#            seri.start()
+            seri.start()
         
         await self.send(text_data=json.dumps({
                 'type':'clientes',
@@ -80,7 +81,7 @@ class webcam(AsyncWebsocketConsumer):
         camera.clientes=camera.clientes -1
         if(camera.clientes==0):
             camera.end()
- #           seri.end()
+            seri.end()
             await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
