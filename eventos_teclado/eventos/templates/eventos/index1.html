@@ -12,10 +12,7 @@
 <script type="text/javascript">
 	// setup some JSON to use
 	var cliente;
-	const n1=4;
-	var n = n1;
-	
-	
+	const tiempo=5; //Tiempo de muestreo para los datos del sensor
 
 
 function mytimer(){
@@ -39,7 +36,7 @@ function mytimer(){
 			if(cliente>1){
 				cliente=cliente-1;
 				if(cliente==1){
-					setInterval(mytimer,10);
+					setInterval(mytimer,tiempo);
 				}
 			}
 		}
@@ -47,7 +44,7 @@ function mytimer(){
 			cliente=data['message'];
 			console.log(cliente);
 			if(cliente==1){
-				setInterval(mytimer,10);
+				setInterval(mytimer,tiempo);
 			}
 
 		}
