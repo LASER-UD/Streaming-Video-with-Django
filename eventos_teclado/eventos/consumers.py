@@ -7,23 +7,23 @@ import threading
 import time
 import serial
 
-class SerialD():
-    cuenta=0
-    def __init__(self):
-         self.datos=None;
-         self.ser = serial.Serial()
-         self.ser.baudrate = 115200
-         self.ser.port = '/dev/ttyACM0'
+# class SerialD():
+#     cuenta=0
+#     def __init__(self):
+#          self.datos=None;
+#          self.ser = serial.Serial()
+#          self.ser.baudrate = 115200
+#          self.ser.port = '/dev/ttyACM0'
 
-    def start(self):
-         self.ser.open()
-    def end(self):
-         self.ser.close()
-    def update(self):
-        self.ser.write(b"g")
-        self.ser.flush() #espera a  exista un dato
-        self.datos=int(self.ser.readline())
-        return self.datos 
+#     def start(self):
+#          self.ser.open()
+#     def end(self):
+#          self.ser.close()
+#     def update(self):
+#         self.ser.write(b"g")
+#         self.ser.flush() #espera a  exista un dato
+#         self.datos=int(self.ser.readline())
+#         return self.datos 
         
 class VideoCamera(object):
     clientes=0;
@@ -42,7 +42,7 @@ class VideoCamera(object):
         return jpeg.tobytes()
 
 camera = VideoCamera()
-seri= SerialD()
+# seri= SerialD()
 
 #asincrono
 #https://channels.readthedocs.io/en/latest/tutorial/part_3.html explicacion de como usar 
@@ -65,7 +65,7 @@ class webcam(AsyncWebsocketConsumer):
 
         if(camera.clientes==1):
             camera.start()
-            seri.start()
+            #seri.start()
         
         await self.send(text_data=json.dumps({
                 'type':'clientes',
@@ -78,7 +78,7 @@ class webcam(AsyncWebsocketConsumer):
         camera.clientes=camera.clientes -1
         if(camera.clientes==0):
             camera.end()
-            seri.end()
+            #seri.end()
             await self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
@@ -102,17 +102,18 @@ class webcam(AsyncWebsocketConsumer):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         if text_data_json['tipo']=='tecla':
-            print(str(message)+ text_data_json['accion'])
+            print(str(message))
         else: #imagen
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
-                    'tipo': text_data_json['tipo']
+                    'tipo': text_data_json['tipo'],
+                    'message':''
                 }
             )
-            if (seri.cuenta==10):
-                print (seri.update())
+            # if (seri.cuenta==10):
+            #     print (seri.update())
 #               await self.channel_layer.group_send(
 #                    self.room_group_name,
 #                    {
@@ -120,9 +121,9 @@ class webcam(AsyncWebsocketConsumer):
 #                        'tipo': 'data'
 #                    }
 #                )
-                seri.cuenta=0
-            else:
-                seri.cuenta=seri.cuenta+1
+            #     seri.cuenta=0
+            # else:
+            #     seri.cuenta=seri.cuenta+1
 
     # Receive message from room group
     async def chat_message(self, event):
@@ -130,4 +131,4 @@ class webcam(AsyncWebsocketConsumer):
         if(tipo=='imagen'):
             await self.send(text_data=json.dumps({'type':tipo,'message':base64.b64encode(camera.get_frame()).decode('ascii')}))
         else:
-            await self.send(text_data=json.dumps({'type':tipo}))
+            await self.send(text_data=json.dumps({'type':tipo,'message': event['message']}))

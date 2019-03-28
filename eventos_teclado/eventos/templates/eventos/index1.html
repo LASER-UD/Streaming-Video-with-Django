@@ -12,16 +12,12 @@
 <script type="text/javascript">
 	// setup some JSON to use
 	var cliente;
-	const tiempo=5; //Tiempo de muestreo para los datos del sensor
-
-
-function mytimer(){
-	webcamSocket.send(JSON.stringify({
-		'message': '',
-		'tipo': 'imagen'
-	}));
-}
-    var webcamSocket = new WebSocket(
+	const tiempo=25; //Tiempo de muestreo para los datos del sensor
+	var teclas=[0,0,0,0,0,0,0,0,0,0,0,0];
+	var accion=0;
+	var tec;
+	var mytimer;
+	var webcamSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/eventos/video/');
 
@@ -31,46 +27,88 @@ function mytimer(){
         if(data['type']=='imagen'){
             document.querySelector('#streaming').src= 'data:image/jpg;base64,'+data['message'];
         }else if(data['type']=='clientes'){
-		console.log(data['message']);
-		if(data['message']=='desc' ){
-			if(cliente>1){
-				cliente=cliente-1;
-				if(cliente==1){
-					setInterval(mytimer,tiempo);
+		
+			if(data['message']=='desc' ){
+				if(cliente>1){
+					cliente=cliente-1;
 				}
 			}
-		}
-		else{
-			cliente=data['message'];
-			console.log(cliente);
-			if(cliente==1){
-				setInterval(mytimer,tiempo);
+			else{
+				cliente=data['message'];
+				console.log(cliente);
 			}
+		}else{}
 
+		if(cliente==1){
+			setTimeout(function(){ 
+			webcamSocket.send(JSON.stringify({
+				'message': '',
+		 		'tipo': 'imagen'
+			})); }, 12.5);
+			
 		}
-	}else{}
            
     };
-	
+	webcamSocket.onclose =function(e){
+		clearInterval(mytimer); 
+
+	}
 	$(document).ready(function() {
 		
 		$(document).keydown(function(tecla){ 
-				var tec = tecla.keyCode ;
-				webcamSocket.send(JSON.stringify({
-            	'message': tec,
-           		 'tipo': 'tecla',
-           		 'accion':'oprimir'
-       			 }));
-
+				tec = tecla.keyCode ;
+				switch(tec){
+					case 38: //flecha arriba
+						if(teclas[0]==0){ teclas[0]=1;
+							webcamSocket.send(JSON.stringify({'message': '1','tipo': 'tecla' }));}
+						break;
+					case 40: //flecha abajo
+						if(teclas[1]==0){ teclas[1]=1;
+							webcamSocket.send(JSON.stringify({'message': '2','tipo': 'tecla' }));}
+						break;
+					case 39: // flecha derecha
+						if(teclas[2]==0){ teclas[2]=1;
+							webcamSocket.send(JSON.stringify({'message': '3','tipo': 'tecla' }));}
+						break;
+					case 37: // flecha izquierda
+						if(teclas[3]==0){ teclas[3]=1;
+							webcamSocket.send(JSON.stringify({'message': '4','tipo': 'tecla' }));}
+						break;	 
+					default:
+					var men= String.fromCharCode(tec)
+							 //Z=90 x=88  f=70  s=83  w=87  d=68 a=65
+						if (men=='Z' || men=='X' || men=='F' || men=='S' || men=='W' || men=='D' || men=='A'){
+							//(tec==90 || tec==88 || tec==70 || tec=83 || tec== 87 || tec==68 || tec==65){
+						 	webcamSocket.send(JSON.stringify({'message':men ,'tipo': 'tecla' }));
+						}
+						break;
+ 
+				}
 		});
 		
 		$(document).keyup(function(tecla){ 
-				var tec = tecla.keyCode ;
-				webcamSocket.send(JSON.stringify({
-            	'message': tec,
-           		 'tipo': 'tecla',
-           		 'accion':'soltar'
-       			}));
+				tec = tecla.keyCode ;
+				switch(tec){
+					case 38: //flecha arriba
+						if(teclas[0]==1){ teclas[0]=0;
+							webcamSocket.send(JSON.stringify({'message': '10','tipo': 'tecla' }));}
+						break;
+					case 40: //flecha abajo
+						if(teclas[1]==1){ teclas[1]=0;
+							webcamSocket.send(JSON.stringify({'message': '20','tipo': 'tecla' }));}
+						break;
+					case 39: // flecha derecha
+						if(teclas[2]==1){ teclas[2]=0;
+							webcamSocket.send(JSON.stringify({'message': '30','tipo': 'tecla' }));}
+						break;
+					case 37: // flecha izquierda
+						if(teclas[3]==1){ teclas[3]=0;
+							webcamSocket.send(JSON.stringify({'message': '40','tipo': 'tecla' }));}
+						break;	 
+					default:
+						break;
+ 
+				}
 		});
 	});
 	</script>
@@ -79,8 +117,19 @@ function mytimer(){
 	<img src="" id='streaming' width="50%" class="imagen">
 	<div class="divr"></div>
 	<div class="div1">
-		ESPACIO DISPONIBLE PARA LOS COMANDOS DE OPERACION ...
-		PROXIMAMENTE ...
+		<ul class='lis'>
+		<li type="disc"> ⬆ = Adelante </li>
+		<li type="disc"> ⬇ = Atras </li>
+		<li type="disc"> ➡= Derecha </li>
+		<li type="disc"> ⬅ = Izquierda </li>
+		<li type="disc"> Z= giro 90° izquierda</li>
+		<li type='disc'> X= giro 90° derecha</li>
+		<li type="disc"> F = Encender o apagar luces</li>
+		<li type="disc"> S = Recoger bola </li>
+		<li type="disc"> W = Subir a la plataforma de lanzamiento </li>
+		<li type="disc"> D = Lanzar </li>
+		<li type="disc"> A = Sprint </li>
+		</ul>
 		
 	</div>
 	<div class="div2">
