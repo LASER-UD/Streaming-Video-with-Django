@@ -1,11 +1,12 @@
 from asgiref.sync import async_to_sync
-from channels.generic.websocket import AsyncWebsocketConsumer
+from channels.generic.websocket import WebsocketConsumer
 import json
 import base64
 import cv2
 import threading
 import time
 import serial
+import threading
 
 class SerialD():
     cuenta=0
@@ -31,7 +32,6 @@ class VideoCamera(object):
     def start(self):
         self.video = cv2.VideoCapture(0)
         (self.grabbed, self.frame) = self.video.read()
-
     def end(self):
         self.video.release()
 
@@ -40,6 +40,8 @@ class VideoCamera(object):
         image = self.frame
         ret, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
+        
+    
 
 camera = VideoCamera()
 seri= SerialD()
@@ -47,87 +49,88 @@ seri= SerialD()
 #asincrono
 #https://channels.readthedocs.io/en/latest/tutorial/part_3.html explicacion de como usar 
 
-class webcam(AsyncWebsocketConsumer):
+class webcam(WebsocketConsumer):
+
     
-    async def connect(self):
+    def connect(self):
         
         self.room_group_name = 'webcam'
 
         # Join room group
-        await self.channel_layer.group_add(
+        async_to_sync(self.channel_layer.group_add)(
             self.room_group_name,
             self.channel_name
         )
 
-        await self.accept()
+        self.accept()
         camera.clientes=camera.clientes + 1
         print(camera.clientes)
 
         if(camera.clientes==1):
             camera.start()
             seri.start()
+            self.tiempo1()
         
-        await self.send(text_data=json.dumps({
+        async_to_sync(self.send(text_data=json.dumps({
                 'type':'clientes',
                 'message': camera.clientes
-            }))
+            })))
         
-
-    async def disconnect(self, close_code):
+    def disconnect(self, close_code):
         # Leave room group
         camera.clientes=camera.clientes -1
         if(camera.clientes==0):
             camera.end()
             seri.end()
-            await self.channel_layer.group_discard(
+            time1.cancel()
+            async_to_sync (self.channel_layer.group_discard(
             self.room_group_name,
             self.channel_name
-            )
+            ))
         else:
-            await self.channel_layer.group_send(
+            async_to_sync (self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
                     'message': 'desc',
                     'tipo': 'clientes'
                 }
-            )
+            ))
             
         print(camera.clientes)
         
-
-
     # Receive message from WebSocket
-    async def receive(self, text_data):
+    def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
         if text_data_json['tipo']=='tecla':
             print(str(message)+ text_data_json['accion'])
-        else: #imagen
-            await self.channel_layer.group_send(
-                self.room_group_name,
-                {
-                    'type': 'chat_message',
-                    'tipo': text_data_json['tipo']
-                }
-            )
-            if (seri.cuenta==10):
-                print (seri.update())
-#               await self.channel_layer.group_send(
-#                    self.room_group_name,
-#                    {
-#                        'type': 'chat_message',
-#                        'tipo': 'data'
-#                    }
-#                )
-                seri.cuenta=0
-            else:
-                seri.cuenta=seri.cuenta+1
-
+        
     # Receive message from room group
-    async def chat_message(self, event):
+    def chat_message(self, event):
         tipo = event['tipo']
         if(tipo=='imagen'):
-            await self.send(text_data=json.dumps({'type':tipo,'message':base64.b64encode(camera.get_frame()).decode('ascii')}))
+            async_to_sync( self.send(text_data=json.dumps({'type':tipo,'message':base64.b64encode(camera.get_frame()).decode('ascii')})))
         else:
-            await self.send(text_data=json.dumps({'type':tipo}))
+            async_to_sync( self.send(text_data=json.dumps({'type':tipo})))
+    def tiempo1(self):
+        
+        self.update()
+        timer1 = threading.Timer(0.016,self.tiempo2)
+        timer1.start()
+        
+    def tiempo2(self):
+        self.update()
+        timer2 = threading.Timer(0.016,self.tiempo1)
+        timer2.start()
+            
+    def update(self):
+        if (seri.cuenta==10):
+               seri.cuenta=0
+        else:
+               seri.cuenta=seri.cuenta+1
+        async_to_sync( self.send(text_data=json.dumps({'type':'imagen','message':base64.b64encode(camera.get_frame()).decode('ascii')})))
+
+        
+        
+        

@@ -15,12 +15,7 @@
 	const tiempo=5; //Tiempo de muestreo para los datos del sensor
 
 
-function mytimer(){
-	webcamSocket.send(JSON.stringify({
-		'message': '',
-		'tipo': 'imagen'
-	}));
-}
+
     var webcamSocket = new WebSocket(
         'ws://' + window.location.host +
         '/ws/eventos/video/');
@@ -35,17 +30,11 @@ function mytimer(){
 		if(data['message']=='desc' ){
 			if(cliente>1){
 				cliente=cliente-1;
-				if(cliente==1){
-					setInterval(mytimer,tiempo);
-				}
 			}
 		}
 		else{
 			cliente=data['message'];
 			console.log(cliente);
-			if(cliente==1){
-				setInterval(mytimer,tiempo);
-			}
 
 		}
 	}else{}

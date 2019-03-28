@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 """
 
 import os
-import socket
 from subprocess import check_output
 m=check_output(['hostname','-I']).decode("utf-8").rstrip(" \n")
 
