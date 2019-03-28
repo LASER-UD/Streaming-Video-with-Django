@@ -18,12 +18,17 @@ Se crea un canal de comunicación con un WebSocket
 ## Pasos para ejecutar proyecto
 
 0 Clonar el repositorio 
-	`cd home/pi/Documents/`
-	`git clone https://github.com/LASER-UD/Streaming-Video-with-Django`
+	`$ cd home/pi/Documents/`
+	`$ git clone https://github.com/LASER-UD/Streaming-Video-with-Django`
 
-1 Abrir el archivo etc/rc.local
-	`$ sudo nano rc.local`
-2 Copiar antes de la linea exit
-	`setsid python3 /home/pi/Documents/Streaming-Video-with-Django/SignalofLive.py &`
+-1 Abrir el archivo etc/rc.local
+	`$ sudo nano rc.local` o `$ sudo geany rc.local`
+-2 Copiar el cntendido del archivo rc.txt en rc.local según la preferencia de terminal o sin terminal
+-3 Entrar a carpeta eventos teclado
+	`$ cd home/pi/Documents/Streaming-Video-with-Django/eventos_teclado`
+-4 Ejecutar 
+	`$ python3 manage.py runser 0:8000`
+	
+	
 
 
