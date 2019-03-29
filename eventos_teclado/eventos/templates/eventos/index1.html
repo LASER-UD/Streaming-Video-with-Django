@@ -67,12 +67,10 @@
 							webcamSocket.send(JSON.stringify({'message': '2','tipo': 'tecla' }));}
 						break;
 					case 39: // flecha derecha
-						if(teclas[2]==0){ teclas[2]=1;
-							webcamSocket.send(JSON.stringify({'message': '3','tipo': 'tecla' }));}
+							webcamSocket.send(JSON.stringify({'message': '3','tipo': 'tecla' }));
 						break;
 					case 37: // flecha izquierda
-						if(teclas[3]==0){ teclas[3]=1;
-							webcamSocket.send(JSON.stringify({'message': '4','tipo': 'tecla' }));}
+							webcamSocket.send(JSON.stringify({'message': '4','tipo': 'tecla' }));
 						break;	 
 					default:
 					var men= String.fromCharCode(tec)
@@ -91,20 +89,12 @@
 				switch(tec){
 					case 38: //flecha arriba
 						if(teclas[0]==1){ teclas[0]=0;
-							webcamSocket.send(JSON.stringify({'message': '10','tipo': 'tecla' }));}
+							webcamSocket.send(JSON.stringify({'message': '5','tipo': 'tecla' }));}
 						break;
 					case 40: //flecha abajo
 						if(teclas[1]==1){ teclas[1]=0;
-							webcamSocket.send(JSON.stringify({'message': '20','tipo': 'tecla' }));}
+							webcamSocket.send(JSON.stringify({'message': '6','tipo': 'tecla' }));}
 						break;
-					case 39: // flecha derecha
-						if(teclas[2]==1){ teclas[2]=0;
-							webcamSocket.send(JSON.stringify({'message': '30','tipo': 'tecla' }));}
-						break;
-					case 37: // flecha izquierda
-						if(teclas[3]==1){ teclas[3]=0;
-							webcamSocket.send(JSON.stringify({'message': '40','tipo': 'tecla' }));}
-						break;	 
 					default:
 						break;
  
