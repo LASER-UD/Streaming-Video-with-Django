@@ -5,15 +5,16 @@
 <head>
 	{% load static %}
 	<meta charset="utf-8" />
-	<title>sin título</title>
+	<title>Login Conductor</title>
 	<link rel="shortcut icon" href="{%  static 'eventos/favicon.ico' %}">
+	
 	<link rel="stylesheet" href="{%  static 'registration/login.css' %}">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 </head>
 
 <body style="overflow-y: hidden;" class="body" >
-<div>
-		{% if form.errors %}
+<div class="container-login100" >
+	{% if form.errors %}
 	<p>Nombre de usuario o contraseña equivocados , vuelva a interlo</p>
 	{% endif %}
 
@@ -25,24 +26,37 @@
 		<p>Please login to see this page.</p>
 		{% endif %}
 	{% endif %}
-
-	<form method="post" action="{% url 'login' %}">
+	<div class="wrap-login100">
+	<form method="post" action="{% url 'login' %}" class="login100-form">
 	{% csrf_token %}
-
-	<div  class="formul">
-	  <td>{{ form.username }}</td>
+	<div class="login100-form-avatar">
+		<img src="{% static "eventos/laser.png" %}" alt="My image"/>
 	</div>
-	<div class="formul">
-	  <td>{{ form.password }}</td>
-	</div>
+	<span class="login100-form-title">Conductor Mercury</span>
+	<div  class="wrap-input100" data-validate="Username is required">
+	  
+	  <input id="{{ form.username.id_for_label }}" maxlength="100" name="{{ form.username.html_name }}"  type="text" class="input100" placeholder="Username"> 
+	  <span class="focus-input100"></span>
+	  <span class="symbol-input100"></span>
 
-	<div>
-	  <input class="boton" type="submit" value="Iniciar sesion " />
+	</div>
+	
+	<div class="wrap-input100" data-validate="Password is required">
+	  <input id="{{ form.password.id_for_label }}" maxlength="100" name="{{ form.password.html_name }}" type="password" class="input100" placeholder="Password">
+	  <span class="focus-input100"></span>
+	  <span class="symbol-input100"></span>
+	</div>
+	<div class="container-login100-form-btn">
+	  <button class="login100-form-btn"/> 
+		Iniciar
+		</button>
 	  <input type="hidden" name="next" value="{{ next }}" />
 	</div>
 	</form>
+	</div>
+	
 </div>	
 
-
+</body>
 </html>
 
