@@ -3,6 +3,7 @@ from channels.routing import ProtocolTypeRouter, URLRouter
 import eventos.routing
 
 application = ProtocolTypeRouter({
+    #'http.request': StaticFilesConsumer(),
     # (http->django views is added by default)
     'websocket': AuthMiddlewareStack(
         URLRouter(

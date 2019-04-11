@@ -12,7 +12,7 @@
 <script type="text/javascript">
 	// setup some JSON to use
 	var cliente;
-	const tiempo=25; //Tiempo de muestreo para los datos del sensor
+	const tiempo=1000/60; //Tiempo de muestreo para los datos del sensor
 	var teclas=[0,0,0,0,0,0,0,0,0,0,0,0];
 	var accion=0;
 	var tec;
@@ -44,7 +44,7 @@
 			webcamSocket.send(JSON.stringify({
 				'message': '',
 		 		'tipo': 'imagen'
-			})); }, 12.5);
+			})); }, tiempo);
 			
 		}
            

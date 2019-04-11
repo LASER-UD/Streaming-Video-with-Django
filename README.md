@@ -15,6 +15,24 @@ Se crea un canal de comunicación con un WebSocket
 - channels
 - opencv2
 - Actualizar Pyrebase `$ pip3 install --upgrade Pyrebase`
+- Si se quiere instalar todo de una `$ pip3 install -r requirements.txt`
+
+
+- Añadir carpeta donde se guarda los paquetes para el servidor de produccion
+-- Instalar daphne `$ pip3 install daphne`
+-- Ejecutar comando 'daphne'
+-- Si no reconoce este comando, modifique el la variable PATH: 
+	0. Mirar contenido de PATH `$ echo $PATH` si no esta la carpeta /home/pi/.local/bin que contiene daphne 
+	1. Añadir la carpeta `$ export PATH="$HOME/pi/.local/bin:$PATH"`
+	2. Cargar PATH `$ source ~/.bashrc`
+	3. Verificar `$ echo $PATH`
+	4. Forma permanente copiar comando de 1 en :
+- Para abrir con nano: '$ sudo nano ~/.bash_profile'
+- /etc/profile (Para todos los usuarios)
+- ~/.bash_profile (Para un usuario concreto)
+- ~/.bash_login (Para un usuario concreto)
+- ~/.profile (Para un usuario concreto)
+
 
 
 ## Pasos para ejecutar proyecto
@@ -30,7 +48,8 @@ Se crea un canal de comunicación con un WebSocket
 	`$ cd home/pi/Documents/Streaming-Video-with-Django/eventos_teclado`
 4. Ejecutar 
 	`$ python3 manage.py runser 0:8000`
-	
-	
+5. Servidor de producción:
+	Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 8001 eventos_teclado.asgi:application &`
+	Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
 
 
