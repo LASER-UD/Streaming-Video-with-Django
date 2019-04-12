@@ -26,7 +26,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'e3e(dlg702^8*#)!*4(p9l1i9)p=5i_7-eeucpq1-2(69^*d8f'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+
+#DEBUG = True
+
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 #ALLOWED_HOSTS = ['*','localhost','192.168.0.10','192.168.0.9','192.168.137.106']
 ALLOWED_HOSTS = ['*','localhost', m]
@@ -133,12 +136,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-
 #if not DEBUG: 
  #   STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR, "eventos", "static/"),)
+
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "collected_static/")
+
 MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "media/")
 
 LOGIN_REDIRECT_URL = '/eventos/'
