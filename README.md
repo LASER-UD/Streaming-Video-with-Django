@@ -15,7 +15,7 @@ Se crea un canal de comunicación con un WebSocket
 - channels
 - opencv2
 - Actualizar Pyrebase `$ pip3 install --upgrade Pyrebase`
-- Si se quiere instalar todo de una `$ pip3 install -r requirements.txt`
+* Si se quiere instalar todo de una `$ pip3 install -r requirements.txt`
 
 
 - Añadir carpeta donde se guarda los paquetes para el servidor de produccion
@@ -27,12 +27,14 @@ Se crea un canal de comunicación con un WebSocket
 	2. Cargar PATH `$ source ~/.bashrc`
 	3. Verificar `$ echo $PATH`
 	4. Forma permanente copiar comando de 1 en :
-- Para abrir con nano: '$ sudo nano ~/.bash_profile'
-- /etc/profile (Para todos los usuarios)
-- ~/.bash_profile (Para un usuario concreto)
-- ~/.bash_login (Para un usuario concreto)
-- ~/.profile (Para un usuario concreto)
+		** Para abrir con nano: '$ sudo nano ~/.bash_profile'
+		** /etc/profile (Para todos los usuarios)
+		** ~/.bash_profile (Para un usuario concreto)
+		** ~/.bash_login (Para un usuario concreto)
+		** ~/.profile (Para un usuario concreto)
 
+## Tener en cuenta 
+El proyecto de django se llama eventos teclado y la aplicación se llama eventos. Los archivos SignalofLive, PruebaSerial son usados para comprobar la conexión a internet y para probral la comunicación serial con PSoC,Arduino o cualquier microcontrolador. Por otro lado, el archivo rc.txt es la configuración del archivo para ejecutar servidor, el archivo requeriments.txt es para instalar los paquetes de forma automatica.
 
 
 ## Pasos para ejecutar proyecto
@@ -46,9 +48,19 @@ Se crea un canal de comunicación con un WebSocket
 2. Copiar el cntendido del archivo rc.txt en rc.local según la preferencia de terminal o sin terminal
 3. Entrar a carpeta eventos teclado
 	`$ cd home/pi/Documents/Streaming-Video-with-Django/eventos_teclado`
-4. Ejecutar 
-	`$ python3 manage.py runser 0:8000`
-5. Servidor de producción:
+4. Colectar Archivos estaticos en la carpeta daployment/collect-static
+	`$ python3 manage.py colectstatic`
+5. Migrar base de datos:
+	`$ python3 manage.py migrate`
+6. Ejecutar servidor de pruebas 
+	`$ python3 manage.py runserver 0:8000`
+7. Crear archivo de configuración de uWSGI (Se puede crear el entorno con un solo comando sin embargo se ejecutara un archivo de configuracion mercury.ini)
+	* Crea la carpeta `$ sudo mkdir -p /etc/uwsgi/sites`
+	* Se mueve a la carpeta `$ cd /etc/uwsgi/sites`
+	* Crea el archivo `$ sudo touch mercury.ini`
+	* Copia contenido de mercury.txt
+8. Configurar Ngix
+9. Ejecutar servidor de producción:
 	Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 8001 eventos_teclado.asgi:application &`
 	Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
 

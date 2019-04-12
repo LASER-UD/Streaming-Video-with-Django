@@ -1,0 +1,14 @@
+[uwsgi]
+project = eventos_teclado
+base = /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/eventos_teclado
+chdir = %(base)/%(project)
+module = %(project).wsgi:application
+# No se usa home por la falta de etorno virtual
+
+master = true
+processes = 4
+
+socket = %(base)/%(project)/%(project).sock
+chmod-socket = 664
+vacuum = true
+max-requests=5000

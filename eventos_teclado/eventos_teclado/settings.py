@@ -15,7 +15,7 @@ import socket
 from subprocess import check_output
 m=check_output(['hostname','-I']).decode("utf-8").rstrip(" \n")
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...) /")# Direcctorio donde se encuentra el proyeco
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -133,8 +133,17 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+
+#if not DEBUG: 
+ #   STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "eventos", "static/"),)
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "collected_static/")
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "media/")
+
 LOGIN_REDIRECT_URL = '/eventos/'
 
 LOGIN_URL = '/accounts/login/'
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE= True
+

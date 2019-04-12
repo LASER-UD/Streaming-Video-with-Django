@@ -1,3 +1,4 @@
+#from channels.staticfiles import StaticFilesConsumer
 from channels.auth import AuthMiddlewareStack
 from channels.routing import ProtocolTypeRouter, URLRouter
 import eventos.routing
