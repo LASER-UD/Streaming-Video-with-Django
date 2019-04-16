@@ -27,11 +27,12 @@ Se crea un canal de comunicación con un WebSocket
 	2. Cargar PATH `$ source ~/.bashrc`
 	3. Verificar `$ echo $PATH`
 	4. Forma permanente copiar comando de 1 en :
-		** Para abrir con nano: '$ sudo nano ~/.bash_profile'
-		** /etc/profile (Para todos los usuarios)
-		** ~/.bash_profile (Para un usuario concreto)
-		** ~/.bash_login (Para un usuario concreto)
-		** ~/.profile (Para un usuario concreto)
+		- Para abrir con nano: '$ sudo nano ~/.bash_profile'
+		- /etc/profile (Para todos los usuarios)
+		- ~/.bash_profile (Para un usuario concreto)
+		- ~/.bash_login (Para un usuario concreto)
+		- ~/.profile (Para un usuario concreto)
+	5. Reiniciar.
 
 ## Tener en cuenta 
 El proyecto de django se llama eventos teclado y la aplicación se llama eventos. Los archivos SignalofLive, PruebaSerial son usados para comprobar la conexión a internet y para probral la comunicación serial con PSoC,Arduino o cualquier microcontrolador. Por otro lado, el archivo rc.txt es la configuración del archivo para ejecutar servidor, el archivo requeriments.txt es para instalar los paquetes de forma automatica.
@@ -63,5 +64,5 @@ El proyecto de django se llama eventos teclado y la aplicación se llama eventos
 9. Ejecutar servidor de producción:
 	Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 8001 eventos_teclado.asgi:application &`
 	Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
-
+	Ejecutar UWSGI: `$ uwsgi --http :8080 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/ -w eventos_teclado.wsgi`
 

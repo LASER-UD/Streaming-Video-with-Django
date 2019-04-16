@@ -1,28 +1,19 @@
-#Intalar django
-sudo apt-get update -y
-sudo apt-get upgrade -y
-sudo apt-get autoremove
-sudo apt-get install python-setuptools -y
-wget  https://bootstrap.pypa.io/get-pip.py
-sudo python get-pip.py
-sudo rm -rf get-pip.py
-sudo pip install Django
+#asgi
+	pathlib
+	asgi_redis
+#Instalar django
+	Django
 #Intalar camara
-pip3 install opencv-python
+	opencv-python
 #Instalar channels
-pip3 install -U channels
+	channels
+	channels_redis
 #Instala paquetes adicionales
-pip3 install --upgrade Pyrebase
+	Pyrebase
 #Inatalar paquetes de servidor de produccion
 #Daphne
-pip3 install daphne
-#ASWI
+ 	daphne
+#WSGI
+ 	uwsgi
 
-#
-asgi-redis==0.8.3
-asgiref==0.9
-autobahn==0.12.1
-channels==0.9.3
-daphne==0.9.1
-dj-database-url==0.4.0
-Django==1.9.3
+

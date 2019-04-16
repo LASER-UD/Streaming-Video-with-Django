@@ -136,14 +136,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#if not DEBUG: 
- #   STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+if not DEBUG: 
+    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, "eventos", "static/"),)
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),'/deployment/']
 
-STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "collected_static/")
-
-MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "deployment", "media/")
+MEDIA_ROOT  = [os.path.join(os.path.dirname(BASE_DIR),"static"),'/deployment/media/']
 
 LOGIN_REDIRECT_URL = '/eventos/'
 
