@@ -7,8 +7,13 @@
 	opencv-python
 #Instalar channels
 	channels
-	channels_redis
+	channels_redis	
 #Instala paquetes adicionales
+	service_identity
+	cryptography
+	cffi #--upgrade
+ 	service_identity #--upgrade
+        pyopenssl #--upgrade
 	Pyrebase
 #Inatalar paquetes de servidor de produccion
 #Daphne
