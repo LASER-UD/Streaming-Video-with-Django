@@ -19,16 +19,16 @@ server {
 
     # Django media
     location /media  {
-        alias /home/pi/Documents/Streaming-Video-with-Django/deployment/collected_static/media/;  # your Django project's media files - amend as required
+        alias /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/static/media/;  # your Django project's media files - amend as required
     }
 
     location /static {
-        alias /home/pi/Documents/Streaming-Video-with-Django/deployment/collected_static/; # your Django project's static files - amend as required
+        alias /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/static/; # your Django project's static files - amend as required
     }
 
     # Finally, send all non-media requests to the Django server.
     location / {
         uwsgi_pass  django;
-        include     /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/uwsgi_params; # the uwsgi_params file you installed
+        include     /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/uwsgi_params.sock; # the uwsgi_params file you installed
     }
 }

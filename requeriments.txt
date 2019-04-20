@@ -1,6 +1,7 @@
 #asgi
 	pathlib
 	asgi_redis
+	asgiref
 #Instalar django
 	Django
 #Intalar camara
@@ -9,12 +10,13 @@
 	channels
 	channels_redis	
 #Instala paquetes adicionales
-	service_identity
-	cryptography
-	cffi #--upgrade
- 	service_identity #--upgrade
-        pyopenssl #--upgrade
-	Pyrebase
+	mitmproxy
+	#cffi #--upgrade
+        #pyopenssl #--upgrade
+	#Pyrebase
+	#service_identity
+	#cryptography
+
 #Inatalar paquetes de servidor de produccion
 #Daphne
  	daphne

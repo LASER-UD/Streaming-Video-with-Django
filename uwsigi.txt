@@ -1,0 +1,26 @@
+# etc/uwsgi/sites
+#ejecutar primero uwsgi --http :8080 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi
+
+
+[uwsgi]
+project = eventos_teclado
+base = /home/pi/Documents/Streaming-Video-with-Django
+
+chdir =%/(base)/%(project)
+module =%(project).wsgi:application
+
+master = true 
+processes = 4
+
+socket = %(base)/%(project)/%(project).sock
+chmod-socket = 664
+vacum = true
+
+# /etc/init/uwsgi.conf
+start on runlevel [2345]
+stop on runñevel [!2345]
+
+setuid pi
+setgid www-data
+
+exec /usr/local/bin/uwsgi --emperor /etc/uwsgi/sites

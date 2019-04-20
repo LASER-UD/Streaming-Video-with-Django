@@ -29,7 +29,7 @@ SECRET_KEY = 'e3e(dlg702^8*#)!*4(p9l1i9)p=5i_7-eeucpq1-2(69^*d8f'
 
 #DEBUG = True
 
-DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
+DEBUG = os.environ.get('DJANGO_DEBUG', '') == 'TRUE'
 
 #ALLOWED_HOSTS = ['*','localhost','192.168.0.10','192.168.0.9','192.168.137.106']
 ALLOWED_HOSTS = ['*','localhost', m]
@@ -134,14 +134,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/dev/howto/static-files/
 
-STATIC_URL = '/static/'
 
-if not DEBUG: 
-    STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+if DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR,'static'),]
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR,'static')
+    STATIC_URL = '/static/'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),'/deployment/']
+MEDIA_URL = '/media/'
+MEDIA_ROOT  = os.path.join(BASE_DIR,'media')
 
-MEDIA_ROOT  = [os.path.join(os.path.dirname(BASE_DIR),"static"),'/deployment/media/']
+
 
 LOGIN_REDIRECT_URL = '/eventos/'
 
