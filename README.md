@@ -55,14 +55,19 @@ El proyecto de django se llama eventos teclado y la aplicación se llama eventos
 	`$ python3 manage.py migrate`
 6. Ejecutar servidor de pruebas 
 	`$ python3 manage.py runserver 0:8000`
-7. Crear archivo de configuración de uWSGI (Se puede crear el entorno con un solo comando sin embargo se ejecutara un archivo de configuracion mercury.ini)
-	* Crea la carpeta `$ sudo mkdir -p /etc/uwsgi/sites`
-	* Se mueve a la carpeta `$ cd /etc/uwsgi/sites`
-	* Crea el archivo `$ sudo touch mercury.ini`
-	* Copia contenido de mercury.txt
-8. Configurar Ngix
-9. Ejecutar servidor de producción:
-	Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 8001 eventos_teclado.asgi:application &`
-	Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
-	Ejecutar UWSGI: `$ uwsgi --http :8080 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/ -w eventos_teclado.wsgi`
+7. Ejecutar servidor de producción:
+	* Crear archivo de configuración de Nginx: `$ sudo geany /etc/nginx/sites-avaible/eventos_teclado`
+	* Copiar contenido de Nginxv1 en el archivo anterior
+	* Crear el vinculo con los sitios habilitados: `$ sudo ln -s /etc/nginx/sites-avaible/eventos_teclado /etc/nginx/sites-enabled`
+	* Eliminar archivo por defecto `$ sudo rm /etc/nginx/sites-enabled/default`
+	* Verificar configuracion de Nginx: `$ nginx -t`
+	* Reiniciar servidor: service nginx restart
+	* Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 9000 eventos_teclado.asgi:application &`
+	* Ejecutar UWSGI: `$ uwsgi --socket :8001 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi`
+	* Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
+	* Cambiar permisos para correr el proyecto: `$ chwn -R www-data /home/pi/Documents/Streaming-Video-with-Django`
+	* Configurar supervisor: `$ uwsgi --ini /etc/uwsgi/eventos_teclado.ini`
+	* Correr .ini para verificar el sock 
+	* Agregar los .sock
+- Nota: los archivos de error o de conexión se configuran en la configuracion de nginx 
 
