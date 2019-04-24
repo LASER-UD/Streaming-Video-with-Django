@@ -1,6 +1,6 @@
-# etc/uwsgi/sites
-#ejecutar primero uwsgi --http :8080 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi
-
+# e# etc/uwsgi/sites
+#ejecutar primero uwsgi --socket :8001 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi
+ server unix:///home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/eventos_teclado.sock 
 
 [uwsgi]
 project = eventos_teclado
