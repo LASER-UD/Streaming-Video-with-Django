@@ -11,16 +11,17 @@
 	channels_redis	
 #Instala paquetes adicionales
 	mitmproxy
-	#cffi #--upgrade
-        #pyopenssl #--upgrade
-	#Pyrebase
-	#service_identity
-	#cryptography
+	cffi #--upgrade
+        pyopenssl #--upgrade
+	Pyrebase
+	service_identity
+	cryptography
 
 #Inatalar paquetes de servidor de produccion
 #Daphne
  	daphne
 #WSGI
  	uwsgi
-
+#Supervisor
+	supervisor
 

@@ -14,7 +14,8 @@ sudo apt-get install libjasper-dev &&
 sudo apt-get install libqtgui4 &&
 sudo apt-get install libqt4-test
 #Nginx
-sudo apt-get install nginx $$
+sudo apt-get install redis-server &&
+sudo apt-get install nginx &&
 #Error de service_
 sudo apt-get install python-dev libffi-dev libssl-dev libxml2-dev libxslt1-dev libjpeg8-dev
 sudo pip3 stall mitmproxy &&

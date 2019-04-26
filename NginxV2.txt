@@ -59,8 +59,6 @@ server {
     
         location  /favicon.ico {
         alias /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/static/eventos/favicon.ico;
-    }
-
-    
+    }    
 
 }

@@ -87,6 +87,18 @@ CHANNEL_LAYERS = {
         },
     },
 }
+
+#celery settings
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379'
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_ENABLE_UTC = False 
+CELERY_TIMEZONE = 'America / New_York' 
+USE_TZ = True 
+TIME_ZONE = 'America / New_York'
+
 # Database
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 

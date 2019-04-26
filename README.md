@@ -49,25 +49,30 @@ El proyecto de django se llama eventos teclado y la aplicación se llama eventos
 2. Copiar el cntendido del archivo rc.txt en rc.local según la preferencia de terminal o sin terminal
 3. Entrar a carpeta eventos teclado
 	`$ cd home/pi/Documents/Streaming-Video-with-Django/eventos_teclado`
-4. Colectar Archivos estaticos en la carpeta daployment/collect-static
+4. Colectar Archivos estaticos en la carpeta eventos_teclado/static
 	`$ python3 manage.py colectstatic`
 5. Migrar base de datos:
 	`$ python3 manage.py migrate`
 6. Ejecutar servidor de pruebas 
 	`$ python3 manage.py runserver 0:8000`
-7. Ejecutar servidor de producción:
+7. Configurar Nginx
 	* Crear archivo de configuración de Nginx: `$ sudo geany /etc/nginx/sites-avaible/eventos_teclado`
 	* Copiar contenido de Nginxv1 en el archivo anterior
 	* Crear el vinculo con los sitios habilitados: `$ sudo ln -s /etc/nginx/sites-avaible/eventos_teclado /etc/nginx/sites-enabled`
 	* Eliminar archivo por defecto `$ sudo rm /etc/nginx/sites-enabled/default`
 	* Verificar configuracion de Nginx: `$ nginx -t`
 	* Reiniciar servidor: service nginx restart
-	* Ejecutar Daphne: `$ daphne -b 0.0.0.0 -p 9000 eventos_teclado.asgi:application &`
-	* Ejecutar UWSGI: `$ uwsgi --socket :8001 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi`
-	* Ejecutar Trabajador: `$ python3 manage.py runworker v2 &`
-	* Cambiar permisos para correr el proyecto: `$ chwn -R www-data /home/pi/Documents/Streaming-Video-with-Django`
-	* Configurar supervisor: `$ uwsgi --ini /etc/uwsgi/eventos_teclado.ini`
+
+9. Ejecutar UWSGI: `$ uwsgi --socket :8001 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi`f
+8. Ejecutar Daphne y trabajador: 
+	*  Cambiar carpeta `$ cd Documents/Streaming-Video-with-Django/eventos_teclado/`
+	* `$ daphne -b 0.0.0.0 -p 9000 /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado.asgi:application &`
+	* `$ python3 manage.py runworker v2 &`
+10. Cambiar permisos para correr el proyecto: `$ chwn -R www-data /home/pi/Documents/Streaming-Video-with-Django`
+11. Configurar supervisor: `$ uwsgi --ini /etc/uwsgi/eventos_teclado.ini`
 	* Correr .ini para verificar el sock 
 	* Agregar los .sock
+        * correr archivo de configuración`$ sudo supervisord -c /etc/supervisor/conf.d/eventos_teclado.conf`
+
 - Nota: los archivos de error o de conexión se configuran en la configuracion de nginx 
 
