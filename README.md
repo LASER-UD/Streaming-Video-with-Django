@@ -61,18 +61,24 @@ El proyecto de django se llama eventos teclado y la aplicación se llama eventos
 	* Crear el vinculo con los sitios habilitados: `$ sudo ln -s /etc/nginx/sites-avaible/eventos_teclado /etc/nginx/sites-enabled`
 	* Eliminar archivo por defecto `$ sudo rm /etc/nginx/sites-enabled/default`
 	* Verificar configuracion de Nginx: `$ nginx -t`
-	* Reiniciar servidor: service nginx restart
+	* Reiniciar servidor: `$ service nginx restart`
 
 9. Ejecutar UWSGI: `$ uwsgi --socket :8001 --chdir /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado -w eventos_teclado.wsgi`f
 8. Ejecutar Daphne y trabajador: 
 	*  Cambiar carpeta `$ cd Documents/Streaming-Video-with-Django/eventos_teclado/`
-	* `$ daphne -b 0.0.0.0 -p 9000 /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado.asgi:application &`
-	* `$ python3 manage.py runworker v2 &`
+	* `$ daphne -b 0.0.0.0 -p 9000 eventos_teclado.asgi:application`
+	* `$ python3 manage.py runworker v2`
 10. Cambiar permisos para correr el proyecto: `$ chwn -R www-data /home/pi/Documents/Streaming-Video-with-Django`
 11. Configurar supervisor: `$ uwsgi --ini /etc/uwsgi/eventos_teclado.ini`
 	* Correr .ini para verificar el sock 
 	* Agregar los .sock
         * correr archivo de configuración`$ sudo supervisord -c /etc/supervisor/conf.d/eventos_teclado.conf`
 
-- Nota: los archivos de error o de conexión se configuran en la configuracion de nginx 
+## Posibles Errores
+1. Nginx no arranca 
+	* Eliminar Nginx: `$ sudo apt-get remove nginx nginx-common`
+	* Eliminar Nginx: `$ sudo apt-get purge nginx nginx-common`
+	* Intalar de nuevo : `$ sudo apt-get install nginx` 
 
+
+- Nota: los archivos de error o de conexión se configuran en la configuracion de nginx 
