@@ -24,4 +24,5 @@
  	uwsgi
 #Supervisor
 	supervisor
-
+#HTTP/2
+	Twisted[tls,http2]

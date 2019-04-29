@@ -1,0 +1,19 @@
+
+[program:uwsgi]
+user = www-data
+command= uwsgi --ini=/etc/uwsgi/sites/eventos_teclado.ini
+autostart=true
+autorestart=true
+stdout_logfile=/home/pi/Documents/log/todo-django.out.log
+stderr_logfile=/home/pi/Documents/log/errores-django.err.log
+stopsignal = INT
+
+[program:worker]
+command= python3 /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado/manage.py runworker v2
+directory = /home/pi/Documents/Streaming-Video-with-Django/eventos_teclado
+process_name=&(program_name)s_%(process_num)02d
+numprocs=4
+autostart=true
+autorestart=true
+stdout_logfile=/home/pi/Documents/log/worker.out.log
+stderr_logfile=/home/pi/Documents/log/worker.err.log
